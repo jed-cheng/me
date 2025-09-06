@@ -1,0 +1,76 @@
+---
+  title: 'Another test post'
+  description: 'Demonstrating multiple posts'
+  date: '2025-03-18T12:00:00Z'
+  tags: ['writing']
+---
+
+
+## Introduction
+Here to briefly review the Standford CS 144 course on computer networking.
+The primary goal of the course is to implement a simplified version of TCP through 8 checkpoints (or labs).
+I followed the course in Winter 2024, using the lab version Minnow.
+
+## Checkpoint 0: An in-memory reliable byte stream
+The goal of this checkpoint is to implement a reliable im-memory byte stream.
+The writer fill the buffer with "best effort" and the reader read from the buffer.
+Here are my approach and design:
+I chose to use queue as the buffer, and use string to represent the bytes.
+Every time, the writer writes to the buffer, it will
+1. truncate the data to fit the available capacity of the buffer
+2. append the truncated data as a string to the back of the queue
+Every time ,the reader reads from the buffer, it will
+1. pop a string in the buffer if the string can be fully read, otherwise, record the remaining length to read of the string and update the remaining lenght to of the data
+2. continue to pop strings until the length to read is 0 or the buffer is empty
+ 
+![checkpoint 0 result](/images/check-0-result.png)
+
+Alternativly, I could use a single string as the buffer, and just triming to the front and append to the back.
+Althought this approach is simpler to implement, but it is inefficient as it will cause the memory shifiting when modifiying a string,
+which is 3-5 times slower than using a queue of strings.
+
+## Checkpoint 1: Reassembler
+The goal of this checkpoint is to implement a TCP reassembler, which reassemble the incoming out-of-order TCP segments into a byte stream.
+The main point is to maintain a receiving window constrained by the first unassembled index and first unacceptable index.
+Here is my approach:
+1. This time  I chose deque as the buffer, with another deque as the flag for data existence since the data could be a false value '\\0',
+And each byte is represented as a single char element in the buffer.
+2. When a segment comes, the reassembler will buffer part of the segment that overlaps the receiving window
+3. Then the reassembler will pop the contiguous bytes from the front of the buffer if the first unassembled byte is received
+4. Finally, move and resize the window along side the byte stream
+![checkpoint 1 result](/images/check-1-result.png)
+
+## Checkpoint 2: TCP Receiver
+The goal of this checkpoint is to implement a TCP receiver 
+In the TCP ,the byte stream is wrapped in a segment with a sequence number, and the receiver needs to maintain a receiving window.
+So we need to unwrap the segment then pass the payload to the reassembler.
+After that, the receiver needs to send an acknowledgment number back to the sender, which is the next expected sequence number.
+For unwrapping sequence number(32 bits) to byte stream index(64 bits), I used a subtle apporach:
+1. Use the upper 32 bits of the checkpoint as the base, and the difference between the sequence number and ISN as the offset, then add the base and offset to get the potential absolute sequence number
+2. Since we should choose the absolute sequence number that is closest to the checkpoint,
+we can check the difference between the potential absolute sequence number and the checkpoint if greater than half of the 2^32.
+if so we  choose the other candidate by adding 2^32 if the potential absolute sequence number is less than the checkpoint,
+otherwise, we choose the other candidate by subtracting 2^32.
+3. Finally, we can get the stream index by adding 1 to the absolute sequence number if the SYN flag is set, and adding 1 to the absolute sequence number plus the length of the payload if the FIN flag is set.
+![checkpoint 2 result](/images/check-2-seqno.png)
+For wrapping, it is much easier, we just need tp add the ISN to the absolute sequence number and truncate to 32 bits.
+
+The checkpoint is the acknowledged sequence number, including SYN and FIN
+The question is why using 32 bit for sequence number, why not 64 bit?
+why the SYN and FIN is occupy 1 sequence number, why not just included it in the header?
+## Checkpoint 3: TCP Sender
+The goal of this checkpoint is to implement a TCP sender.
+The sender needs to maintain a sending window, which is constrained by the last byte sent and the last byte acknowledged.
+The sender also needs to handle retransmission when the timer expires.
+Here is my approach:
+1. I chose queue as the buffer, and each segment is represented as a single element in the queue.
+2. When the sender is called to fill the window, it will send the segment and save it in the buffer.
+3. When the sender receives an acknowledgment, it will remove the acknowledged segments from the buffer.
+4. When the timer expires, it will retransmit the oldest segment in the buffer.
+5. Finally, update the sending window along side the byte stream.
+Since the sender assumes the initial size of the receiver's window is 1, it will send only SYN to the receiver and wait for the ACK and available capacity, then start send the data.
+That is what we called the three-way handshake.
+When the sender send the last segment with FIN flag, it will wait for the ACK of the FIN and the timer to expire before closing the connection.
+The four-way handshake is not implemented in this checkpoint.
+
+For the retransmission, we are using the exponential backoff strategy, which means the retransmission timeout will double every time the timer expires.
