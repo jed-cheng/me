@@ -1,8 +1,9 @@
 ---
-  title: 'Another test post'
+  title: 'Standford CS 144 Review'
   description: 'Demonstrating multiple posts'
   date: '2025-03-18T12:00:00Z'
-  tags: ['writing']
+  status: 'doing'
+  tags: ['test']
 ---
 
 
@@ -24,7 +25,9 @@ Every time ,the reader reads from the buffer, it will
 2. continue to pop strings until the length to read is 0 or the buffer is empty
  
 ![checkpoint 0 result](/images/check-0-result.png)
-
+```js
+console.log('test syntax highlighting');
+```
 Alternativly, I could use a single string as the buffer, and just triming to the front and append to the back.
 Althought this approach is simpler to implement, but it is inefficient as it will cause the memory shifiting when modifiying a string,
 which is 3-5 times slower than using a queue of strings.

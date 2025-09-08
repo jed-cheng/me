@@ -6,10 +6,11 @@ import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { dateRange } from "@lib/utils";
 import { SITE, HOME, SOCIALS } from "@lib/consts";
+import PostItem from "@components/posts/PostItem.astro";
 
 const posts = (await getCollection("posts"))
-  // .filter(post => !post.data.draft)
-  // .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  // .filter(post => post.data.status === 'done')
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0,SITE.NUM_POSTS_ON_HOMEPAGE);
 
 // const projects = (await getCollection("projects"))
@@ -39,26 +40,7 @@ const posts = (await getCollection("posts"))
       <section>
         <article class="space-y-4">
           <p class="animate">
-            I am a minimal, seo friendly, accessible portfolio and blog for developers. 
-            I am an even more lightweight version of my popular theme
-            <Link href="https://github.com/markhorn-dev/astro-sphere" aria-label="Astro Sphere on Github" external>
-              Astro Sphere
-            </Link>.
-            I have a lighthouse scores of 100 across the board for performance, 
-            accesibility, best practices and SEO.
-          </p>
-          <p class="animate">
-            I come packed with full type safety, a sitemap, an rss feed, markdown 
-            and mdx support (use components in your markdown) through astro integrations.
-            I am styled with tailwind and come preconfigured with light, dark and 
-            system/os theme preferences out of the box.
-          </p>
-          <p class="animate">
-            Visit
-            <Link href="https://github.com/markhorn-dev/astro-nano" aria-label="Astro Nano on Github" external>
-              Astro Nano on Github
-            </Link>
-            to fork the repository, read the docs or one-click deploy on Vercel or Netlify. 
+            I write code. I build software. 
           </p>
         </article>
       </section>
@@ -68,14 +50,14 @@ const posts = (await getCollection("posts"))
           <h5 class="font-semibold text-black dark:text-white">
             Latest posts
           </h5>
-          <Link href="/blog">
+          <Link href="/posts">
             See all posts
           </Link>
         </div>
         <ul class="flex flex-col gap-4">
           {posts.map(post => (
             <li>
-              <ArrowCard entry={post} />
+              <PostItem post={post} variant="compact"/>
             </li>
           ))}
         </ul>

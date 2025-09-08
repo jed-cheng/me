@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  post: CollectionEntry<"posts">
+  variant?: 'default' | 'compact';
+}
+
+const { post, variant = 'default' } = Astro.props;
+---
+
+<a href={`/posts/${post.id}`}>
+  <div class="flex ">
+    <h3 class=" text-lg text-black dark:text-white">
+      {post.data.title}
+    </h3>
+    <p class="ml-auto">
+       {post.data.date.toLocaleString("default", { 
+          day: "2-digit", 
+          month: "short", 
+          year: "numeric" 
+        })
+      }
+    </p>
+  </div>
+
+    {variant === 'default' && (
+      <p class="text-sm text-black/75 dark:text-white/75 mt-1">
+        {post.data.description}
+      </p>
+    )}
+</a>

@@ -1,4 +1,8 @@
-<button id="back-to-top" class="relative group w-fit flex pl-8 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
+---
+import { cn } from "@lib/utils";
+---
+
+<!-- <button id="back-to-top" class="relative group w-fit flex pl-8 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out">
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 24 24"
@@ -9,4 +13,46 @@
   <div class="text-sm">
     Back to top
   </div>
+</button> -->
+
+
+<button
+  aria-label='Back to Top'
+  class={cn(
+    "flex flex-nowrap group items-center justify-center",
+    "border border-border bg-primary-foreground text-3xl opacity-0",
+    "z-90 fixed bottom-8 end-4 translate-y-28  rounded-full  transition-all duration-300  data-[show=true]:translate-y-0 data-[show=true]:opacity-100 sm:end-8 sm:h-12 sm:w-12", 
+    "h-8 w-8",
+    "hover:bg-muted "
+  )}
+  data-show='false'
+  id='to-top-btn'
+  >
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24"
+    class="absolute top-1/2 -translate-y-1/2 size-4 stroke-2 fill-none stroke-current rotate-90">
+    <line x1="5" y1="12" x2="19" y2="12" class="translate-x-2 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
+    <polyline points="12 5 5 12 12 19" class="translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
+  </svg>
 </button>
+
+
+<script>
+	const scrollBtn = document.getElementById('to-top-btn') as HTMLButtonElement
+	const targetHeader = document.getElementById('post-hero') as HTMLDivElement
+
+	function callback(entries: IntersectionObserverEntry[]) {
+		entries.forEach((entry) => {
+			// only show the scroll to top button when the heading is out of view
+			scrollBtn.dataset.show = (!entry.isIntersecting).toString()
+		})
+	}
+
+	scrollBtn.addEventListener('click', () => {
+		document.documentElement.scrollTo({ behavior: 'smooth', top: 0 })
+	})
+
+	const observer = new IntersectionObserver(callback)
+	observer.observe(targetHeader)
+</script>

@@ -1,0 +1,29 @@
+---
+import { cn } from '@lib/utils'
+type Props = {
+  status: 'todo' | 'doing' | 'done'
+}
+
+const labelMap = {
+  todo: 'To Do',
+  doing: 'In Progress',
+  done: 'Done'
+}
+
+const { status } = Astro.props
+---
+
+<div class='relative flex items-center justify-center'>
+  <span
+    class={cn(
+      'absolute inline-flex h-2 w-2 animate-ping rounded-full border opacity-75 text-center',
+      status === 'doing' && 'border-amber-400 bg-amber-400',
+      status === 'done' && 'border-green-400 bg-green-400',
+      status === 'todo' && 'border-gray-400 bg-white dark:bg-gray-200 dark:border-gray-600'
+    )}
+  ></span>
+  <span class='relative inline-flex h-2 w-2 rounded-full bg-amber-400'></span>
+</div>
+<span>
+  {labelMap[status]}
+</span>
