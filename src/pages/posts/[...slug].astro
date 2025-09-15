@@ -11,7 +11,6 @@ import TOC from "@components/posts/TOC.astro";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("posts"))
-    .filter(post => post.data.status === 'done')
   
   return posts.map((post)=>({
     params: { slug: post.id },

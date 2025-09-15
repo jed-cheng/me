@@ -15,16 +15,16 @@ const posts = defineCollection({
   })
 });
 
-const projects = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/projects" }),
-  schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    status:  z.enum(['todo', 'doing', 'done']).default('todo'),
-  })
-})
+// const projects = defineCollection({
+//   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/projects" }),
+//   schema: z.object({
+//     name: z.string(),
+//     description: z.string(),
+//     status:  z.enum(['todo', 'doing', 'done']).default('todo'),
+//   })
+// })
 
 export const collections = { 
   posts, 
-  projects 
+  // projects 
 };
