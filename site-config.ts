@@ -18,7 +18,7 @@ export const SITE = {
     city: "YOUR_CITY",
     countryName: "YOUR_COUNTRY",
     countryCode: "XX",                  // ISO 3166-1 alpha-2, e.g. "US"
-    timezone: "YOUR_TIMEZONE",         // IANA tz, e.g. "America/New_York"
+    timezone: "Asia/Shanghai",         // IANA tz, e.g. "America/New_York"
   },
 
   // --- Social / contact links ---
