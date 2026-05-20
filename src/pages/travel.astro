@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Globe from "../components/Globe";
+import { SITE } from "../../site-config";
+---
+
+<Layout
+  title={`Visited Countries · ${SITE.author.fullName}`}
+  description="An interactive globe showing countries I have visited."
+>
+  <main class="relative mx-auto flex w-full max-w-5xl flex-col items-center gap-6 p-8">
+    <div class="w-full">
+      <a
+        href="/"
+        class="mb-6 inline-flex items-center gap-1 rounded-lg border border-border bg-card px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+      >
+        ← Back
+      </a>
+      <h1 class="mt-4 text-4xl font-bold">Visited Countries</h1>
+      <p class="mt-2 text-muted-foreground">
+        {SITE.visitedCountries.length} countr{SITE.visitedCountries.length !== 1 ? "ies" : "y"} visited so far.
+        <span class="ml-1 inline-block h-3 w-3 rounded-sm bg-indigo-500 align-middle" />
+        = visited
+      </p>
+    </div>
+
+    <!-- 3D interactive globe -->
+    <div class="w-full max-w-3xl rounded-2xl border border-border bg-card p-4">
+      <Globe client:load enableHover={true} />
+    </div>
+
+    <!-- Country list -->
+    <div class="w-full max-w-3xl">
+      <h2 class="mb-4 text-lg font-semibold">Countries</h2>
+      <ul class="flex flex-wrap gap-2">
+        {
+          SITE.visitedCountries.sort().map((country) => (
+            <li class="rounded-full border border-indigo-300 bg-indigo-50 px-3 py-1 text-sm text-indigo-700 dark:border-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+              {country}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </main>
+</Layout>
