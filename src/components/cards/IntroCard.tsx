@@ -1,11 +1,11 @@
-import { Github, Linkedin, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import BentoCard from "@/components/BentoCard";
+import { GithubLogoIcon, LinkedinLogoIcon, EnvelopeIcon } from "@phosphor-icons/react";
+import { buttonVariants } from "@/components/ui/button";
+import { BentoGridItem } from "@/components/ui/bento-grid";
 import { SITE } from "@/site-config";
 
 export default function IntroCard() {
   return (
-    <BentoCard
+    <BentoGridItem
       colSpan="col-span-1 md:col-span-2 lg:col-span-3"
       rowSpan="lg:row-span-4"
       padding="p-6"
@@ -27,24 +27,31 @@ export default function IntroCard() {
 
           {/* Social buttons */}
           <div className="flex flex-wrap gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={SITE.links.github} target="_blank" rel="noopener noreferrer">
-                <Github size={16} className="mr-1.5" />
-                GitHub
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <a href={SITE.links.linkedin} target="_blank" rel="noopener noreferrer">
-                <Linkedin size={16} className="mr-1.5" />
-                LinkedIn
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <a href={`mailto:${SITE.links.email}`}>
-                <Mail size={16} className="mr-1.5" />
-                Email
-              </a>
-            </Button>
+            <a
+              href={SITE.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              <GithubLogoIcon size={16} className="mr-1.5" />
+              GitHub
+            </a>
+            <a
+              href={SITE.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              <LinkedinLogoIcon size={16} className="mr-1.5" />
+              LinkedIn
+            </a>
+            <a
+              href={`mailto:${SITE.links.email}`}
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              <EnvelopeIcon size={16} className="mr-1.5" />
+              Email
+            </a>
           </div>
         </div>
 
@@ -59,6 +66,6 @@ export default function IntroCard() {
           }}
         />
       </div>
-    </BentoCard>
+    </BentoGridItem>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BentoCard from "@/components/BentoCard";
+import { BentoGridItem } from "@/components/ui/bento-grid";
 import { SITE } from "@/site-config";
 
 function formatTime(date: Date, timezone: string): string {
@@ -32,7 +32,7 @@ export default function TimeZoneCard() {
   }, []);
 
   return (
-    <BentoCard colSpan="col-span-1" rowSpan="lg:row-span-2">
+    <BentoGridItem colSpan="col-span-1" rowSpan="lg:row-span-2">
       <div className="flex flex-col gap-3 justify-center h-full">
         {/* Home timezone */}
         <div>
@@ -50,6 +50,6 @@ export default function TimeZoneCard() {
           <p className="text-3xl font-bold tabular-nums">{formatTime(now, visitorTz)}</p>
         </div>
       </div>
-    </BentoCard>
+    </BentoGridItem>
   );
 }

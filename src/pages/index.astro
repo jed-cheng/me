@@ -6,21 +6,12 @@ import ContactCard from "@/components/cards/ContactCard";
 import TimeZoneCard from "@/components/cards/TimeZoneCard";
 import NowCard from "@/components/cards/NowCard";
 import ThemeToggleCard from "@/components/cards/ThemeToggleCard";
-import BentoCard from "@/components/BentoCard";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 ---
 
 <Layout>
-  <!--
-    Bento grid layout:
-    - Mobile:  single column, cards stack vertically
-    - Tablet:  2 columns
-    - Desktop: 4 columns × 8 rows, fixed max height (bento look)
-  -->
-  <main
-    class="mx-auto grid w-full max-w-6xl gap-3 p-4
-           md:grid-cols-2
-           lg:h-screen lg:max-h-[800px] lg:grid-cols-4 lg:grid-rows-8"
-  >
+  <main class="mx-auto w-full max-w-6xl p-4 lg:h-screen lg:max-h-[800px]">
+    <BentoGrid>
     <!-- Row 1-4: Intro (3 wide) + About (1 wide, 6 tall) -->
     <IntroCard client:load />
     <AboutCard client:load />
@@ -34,7 +25,7 @@ import BentoCard from "@/components/BentoCard";
     <ThemeToggleCard client:load />
 
     <!-- Row 7-8: Link cards — customise href/title to suit you -->
-    <BentoCard
+    <BentoGridItem
       href="/blog"
       title="Blog"
       colSpan="col-span-1"
@@ -42,9 +33,9 @@ import BentoCard from "@/components/BentoCard";
       client:load
     >
       <p class="text-sm text-muted-foreground">Read my writing →</p>
-    </BentoCard>
+    </BentoGridItem>
 
-    <BentoCard
+    <BentoGridItem
       href="/projects"
       title="Projects"
       colSpan="col-span-1"
@@ -52,10 +43,10 @@ import BentoCard from "@/components/BentoCard";
       client:load
     >
       <p class="text-sm text-muted-foreground">See what I've built →</p>
-    </BentoCard>
+    </BentoGridItem>
 
     <!-- Footer card -->
-    <BentoCard
+    <BentoGridItem
       colSpan="col-span-1 md:col-span-2"
       rowSpan="lg:row-span-1"
       client:load
@@ -66,6 +57,7 @@ import BentoCard from "@/components/BentoCard";
         <a href="https://react.dev" target="_blank" class="underline underline-offset-2">React</a> &amp;
         <a href="https://ui.shadcn.com" target="_blank" class="underline underline-offset-2">shadcn/ui</a>.
       </p>
-    </BentoCard>
+    </BentoGridItem>
+    </BentoGrid>
   </main>
 </Layout>

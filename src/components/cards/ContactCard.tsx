@@ -1,10 +1,10 @@
-import { Mail, MapPin, Github, Linkedin, Twitter } from "lucide-react";
-import BentoCard from "@/components/BentoCard";
+import { EnvelopeIcon, MapPinIcon, GithubLogoIcon, LinkedinLogoIcon, TwitterLogoIcon } from "@phosphor-icons/react";
+import { BentoGridItem } from "@/components/ui/bento-grid";
 import { SITE } from "@/site-config";
 
 export default function ContactCard() {
   return (
-    <BentoCard
+    <BentoGridItem
       title="Get in touch"
       colSpan="col-span-1"
       rowSpan="lg:row-span-4"
@@ -19,11 +19,11 @@ export default function ContactCard() {
             href={`mailto:${SITE.links.email}`}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Mail size={14} />
+            <EnvelopeIcon size={14} />
             {SITE.links.email}
           </a>
           <span className="flex items-center gap-2 text-muted-foreground">
-            <MapPin size={14} />
+            <MapPinIcon size={14} />
             {SITE.location.city}, {SITE.location.countryName}
           </span>
         </address>
@@ -40,7 +40,7 @@ export default function ContactCard() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Github size={14} />
+                <GithubLogoIcon size={14} />
                 GitHub
               </a>
             </li>
@@ -51,7 +51,7 @@ export default function ContactCard() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Linkedin size={14} />
+                <LinkedinLogoIcon size={14} />
                 LinkedIn
               </a>
             </li>
@@ -62,13 +62,13 @@ export default function ContactCard() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Twitter size={14} />
+                <TwitterLogoIcon size={14} />
                 Twitter / X
               </a>
             </li>
           </ul>
         </nav>
       </div>
-    </BentoCard>
+    </BentoGridItem>
   );
 }

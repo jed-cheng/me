@@ -11,6 +11,17 @@
 		"Astro docs": {
 			"url": "https://mcp.docs.astro.build/mcp",
 			"type": "http"
+		},
+		"io.github.ChromeDevTools/chrome-devtools-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"--registry",
+				"https://registry.npmjs.org",
+				"chrome-devtools-mcp@1.0.1"
+			],
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.0.1"
 		}
 	},
 	"inputs": []

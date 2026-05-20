@@ -1,10 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import BentoCard from "@/components/BentoCard";
+import { BentoGridItem } from "@/components/ui/bento-grid";
 import { SITE } from "@/site-config";
 
 export default function AboutCard() {
   return (
-    <BentoCard
+    <BentoGridItem
       title="About me"
       colSpan="col-span-1"
       rowSpan="lg:row-span-6"
@@ -25,6 +25,6 @@ export default function AboutCard() {
           </div>
         </div>
       </div>
-    </BentoCard>
+    </BentoGridItem>
   );
 }

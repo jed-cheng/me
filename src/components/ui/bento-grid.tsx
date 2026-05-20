@@ -1,24 +1,34 @@
-import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 
-interface BentoCardProps {
-  children?: ReactNode;
-  /** Tailwind col-span classes, e.g. "col-span-1 md:col-span-2" */
-  colSpan?: string;
-  /** Tailwind row-span classes, e.g. "row-span-2" */
-  rowSpan?: string;
-  /** When set, the whole card becomes a link */
-  href?: string;
-  /** Card title rendered at the top (optional) */
-  title?: string;
-  /** Extra classes added to the outer card div */
-  className?: string;
-  /** Inner padding override, defaults to "p-6" */
-  padding?: string;
-}
 
-export default function BentoCard({
+// Bento grid layout:
+// - Mobile:  single column, cards stack vertically
+// - Tablet:  2 columns
+// - Desktop: 4 columns × 8 rows, fixed max height (bento look)
+
+export const BentoGrid = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children?: ReactNode;
+}) => {
+  return (
+
+    <div
+      className={cn(
+        "grid h-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-8",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const BentoGridItem = ({
   children,
   colSpan = "col-span-1",
   rowSpan = "",
@@ -26,7 +36,15 @@ export default function BentoCard({
   title,
   className,
   padding = "p-6",
-}: BentoCardProps) {
+}: {
+  children?: ReactNode;
+  colSpan?: string;
+  rowSpan?: string;
+  href?: string;
+  title?: string;
+  className?: string;
+  padding?: string;
+}) => {
   const base = cn(
     "group relative overflow-hidden rounded-2xl border border-border bg-card text-card-foreground",
     "transition-all duration-300 hover:border-primary/50 hover:shadow-md",
@@ -39,7 +57,7 @@ export default function BentoCard({
   const inner = (
     <>
       {href && (
-        <ArrowUpRight
+        <ArrowUpRightIcon
           size={18}
           className="absolute right-4 top-4 opacity-40 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
@@ -62,4 +80,4 @@ export default function BentoCard({
   }
 
   return <div className={base}>{inner}</div>;
-}
+};

@@ -1,9 +1,9 @@
-import BentoCard from "@/components/BentoCard";
+import { BentoGridItem } from "@/components/ui/bento-grid";
 import { SITE } from "@/site-config";
 
 export default function NowCard() {
   return (
-    <BentoCard colSpan="col-span-1" rowSpan="lg:row-span-1">
+    <BentoGridItem colSpan="col-span-1" rowSpan="lg:row-span-1">
       <div className="flex h-full flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -25,6 +25,6 @@ export default function NowCard() {
         </div>
         <p className="text-sm text-muted-foreground">{SITE.now}</p>
       </div>
-    </BentoCard>
+    </BentoGridItem>
   );
 }
