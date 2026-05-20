@@ -5,8 +5,7 @@ import * as d3 from "d3";
 import { SITE } from "../../site-config";
 
 // World GeoJSON is imported at build time
-// @ts-ignore
-import worldData from "../lib/world.json";
+import worldData from "../lib/world.json" assert { type: "json" };
 
 interface Props {
   enableHover?: boolean;
