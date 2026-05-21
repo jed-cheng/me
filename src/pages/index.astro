@@ -19,7 +19,7 @@ import BentoCard from "@/components/BentoCard";
   <main
     class="mx-auto grid w-full max-w-6xl gap-3 p-4
            md:grid-cols-2
-           lg:h-screen lg:max-h-[900px] lg:grid-cols-4 lg:grid-rows-9"
+           lg:h-screen lg:max-h-[800px] lg:grid-cols-4 lg:grid-rows-8"
   >
     <!-- Row 1-4: Intro (3 wide) + About (1 wide, 6 tall) -->
     <IntroCard client:load />
@@ -52,16 +52,6 @@ import BentoCard from "@/components/BentoCard";
       client:load
     >
       <p class="text-sm text-muted-foreground">See what I've built →</p>
-    </BentoCard>
-
-    <BentoCard
-      href="/travel"
-      title="Visited Countries"
-      colSpan="col-span-1 md:col-span-2"
-      rowSpan="lg:row-span-1"
-      client:load
-    >
-      <p class="text-sm text-muted-foreground">Countries I've been to →</p>
     </BentoCard>
 
     <!-- Footer card -->

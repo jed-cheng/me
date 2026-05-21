@@ -2,8 +2,6 @@
 title: "Building a Bento Grid Layout with Tailwind CSS"
 description: "How to create a responsive bento-style grid using CSS Grid and Tailwind CSS v4."
 pubDate: 2024-05-20
-category: "tutorial"
-draft: false
 ---
 
 # Building a Bento Grid Layout with Tailwind CSS

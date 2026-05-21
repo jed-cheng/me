@@ -1,0 +1,43 @@
+---
+title: "Using MDX in Your Blog"
+description: "How to use MDX to embed interactive React components inside your blog posts."
+pubDate: 2025-01-10
+---
+
+MDX is a special flavour of Markdown that supports embedded JavaScript & JSX syntax.
+This unlocks the ability to mix UI components into your content.
+
+## Why MDX?
+
+With MDX you can import and use any React (or Astro) component directly in a post:
+
+```mdx
+import MyComponent from "../../components/MyComponent";
+
+<MyComponent message="Hello from MDX!" />
+```
+
+This is great for:
+
+- **Interactive demos** — embed a live code editor or chart
+- **Custom callout boxes** — reuse styled components across posts
+- **Data-driven content** — fetch and render dynamic data at build time
+
+## Example: Inline styled callout
+
+You can write plain JSX directly in the file without an import:
+
+<div style={{
+  background: "rgba(99,102,241,0.1)",
+  border: "1px solid rgba(99,102,241,0.3)",
+  borderRadius: "8px",
+  padding: "1rem"
+}}>
+  💡 **Tip:** MDX files use the `.mdx` extension and live alongside regular `.md` posts in `src/content/blog/`.
+</div>
+
+## More resources
+
+- [MDX docs](https://mdxjs.com/docs/what-is-mdx/)
+- [Astro MDX integration](https://docs.astro.build/en/guides/integrations-guide/mdx/)
+- [Astro content collections guide](https://docs.astro.build/en/guides/content-collections/)

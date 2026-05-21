@@ -2,8 +2,6 @@
 title: "Hello, World"
 description: "My first blog post — an introduction to this site."
 pubDate: 2024-01-15
-category: "intro"
-draft: false
 ---
 
 # Hello, World!

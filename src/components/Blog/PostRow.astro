@@ -4,16 +4,16 @@ import { formatDate } from "../../lib/helpers";
 interface Props {
   title: string;
   date: Date;
-  id: string;
+  slug: string;
   description?: string;
 }
 
-const { title, date, id, description } = Astro.props;
+const { title, date, slug, description } = Astro.props;
 ---
 
 <li class="list-none w-full">
   <a
-    href={`/blog/${id}`}
+    href={`/blog/${slug}`}
     class="group flex flex-col gap-1 rounded-xl border border-border p-4 transition-colors hover:border-primary/50 hover:bg-card"
   >
     <div class="flex items-start justify-between gap-4">

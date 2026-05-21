@@ -2,8 +2,6 @@
 title: "Why I Chose Astro for My Portfolio"
 description: "A quick look at why Astro is a great fit for content-focused personal sites."
 pubDate: 2024-03-10
-category: "tech"
-draft: false
 ---
 
 # Why I Chose Astro for My Portfolio
