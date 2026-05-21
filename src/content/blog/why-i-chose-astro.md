@@ -24,7 +24,7 @@ Astro's built-in content layer gives you:
 - Automatic routing from markdown files
 - A clean `getCollection` / `getEntry` API
 
-Writing blog posts is as simple as dropping a `.md` file into `src/data/blog/`.
+Writing blog posts is as simple as dropping a `.md` (or `.mdx`) file into `src/content/blog/`.
 
 ## Great DX
 
