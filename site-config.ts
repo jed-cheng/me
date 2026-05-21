@@ -45,4 +45,38 @@ export const SITE = {
 
   // --- Avatar image path (put your image in /public) ---
   avatarSrc: "/avatar-placeholder.png", // swap with your own image
+
+  // --- Visited countries (used on /travel page) ---
+  // Use full country names as they appear in the world GeoJSON
+  visitedCountries: [
+    "China",
+    "Japan",
+    "United States of America",
+    "United Kingdom",
+    "France",
+    // Add more as needed
+  ],
+
+  // --- Projects (shown on /projects page) ---
+  projects: [
+    {
+      title: "Personal Portfolio",
+      description:
+        "My personal bento-style portfolio built with Astro, React and Tailwind CSS.",
+      url: "https://github.com/YOUR_GITHUB/me",
+      tech: ["Astro", "React", "Tailwind CSS"],
+    },
+    {
+      title: "Project Two",
+      description: "A short description of what this project does and why you built it.",
+      url: "https://github.com/YOUR_GITHUB/project-two",
+      tech: ["TypeScript", "Node.js"],
+    },
+    {
+      title: "Project Three",
+      description: "Another interesting project with a concise description.",
+      url: "https://github.com/YOUR_GITHUB/project-three",
+      tech: ["React", "Next.js"],
+    },
+  ],
 };
