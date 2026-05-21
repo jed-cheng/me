@@ -25,12 +25,6 @@ const locale = Astro.currentLocale ?? "en";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={`${SITE.author.fullName} · Blog`}
-      href={new URL("rss.xml", Astro.site)}
-    />
     <script is:inline>
       // Apply saved theme before first paint to prevent flash
       (function () {

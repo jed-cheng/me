@@ -16,6 +16,7 @@ import { remarkModifiedTime } from "./src/lib/remark-modified-time.mjs";
 
 // https://astro.build/config
 export default defineConfig({
+  // site: "https://me.pages.dev",
   adapter: cloudflare(),
   integrations: [mdx(), react(), sitemap()],
   markdown: {
