@@ -22,6 +22,11 @@
 			],
 			"gallery": "https://api.mcp.github.com",
 			"version": "1.0.1"
+		},
+		"ESLint": {
+			"type": "stdio",
+			"command": "npx",
+			"args": ["@eslint/mcp@latest"]
 		}
 	},
 	"inputs": []
