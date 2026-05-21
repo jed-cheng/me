@@ -1,15 +1,24 @@
 ---
 import Layout from "./Layout.astro";
 import { formatDate } from "../lib/helpers";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 interface Props {
   title: string;
   description: string;
   pubDate: Date;
   minutesRead?: string;
+  lastModified?: string;
 }
 
-const { title, description, pubDate, minutesRead } = Astro.props;
+const { title, description, pubDate, minutesRead, lastModified } = Astro.props;
+
+const lastModifiedFormatted = lastModified
+  ? dayjs(lastModified).utc().format("MMM D, YYYY")
+  : null;
 ---
 
 <Layout title={title} description={description}>
@@ -27,6 +36,8 @@ const { title, description, pubDate, minutesRead } = Astro.props;
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         {minutesRead && <span>·</span>}
         {minutesRead && <span>{minutesRead}</span>}
+        {lastModifiedFormatted && <span>·</span>}
+        {lastModifiedFormatted && <span>Updated {lastModifiedFormatted}</span>}
       </div>
     </div>
 

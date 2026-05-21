@@ -11,10 +11,12 @@ const {
   title = `${SITE.author.fullName} — ${SITE.author.jobTitle}`,
   description = SITE.author.bio,
 } = Astro.props;
+
+const locale = Astro.currentLocale ?? "en";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,6 +25,12 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.author.fullName} · Blog`}
+      href={new URL("rss.xml", Astro.site)}
+    />
     <script is:inline>
       // Apply saved theme before first paint to prevent flash
       (function () {

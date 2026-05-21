@@ -12,13 +12,19 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from '@astrojs/sitemap';
 
 import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
+import { remarkModifiedTime } from './src/lib/remark-modified-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://example.com', // TODO: replace with your actual domain
   // adapter: cloudflare(),
   integrations: [mdx(), react(), sitemap()],
   markdown: {
-    remarkPlugins: [remarkReadingTime],
+    remarkPlugins: [remarkReadingTime, remarkModifiedTime],
+  },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
   },
   vite: {
     plugins: [tailwindcss()],

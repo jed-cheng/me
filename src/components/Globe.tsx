@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { SITE } from "../../site-config";
+import { SITE } from "@/site-config";
 
 // World GeoJSON is imported at build time
-import worldData from "../lib/world.json" assert { type: "json" };
+import worldData from "@/lib/world.json" assert { type: "json" };
 
 interface Props {
   enableHover?: boolean;
