@@ -1,23 +1,22 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import cloudflare from '@astrojs/cloudflare';
+import cloudflare from "@astrojs/cloudflare";
 
-import mdx from '@astrojs/mdx';
+import mdx from "@astrojs/mdx";
 
-import react from '@astrojs/react';
+import react from "@astrojs/react";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import sitemap from '@astrojs/sitemap';
+import sitemap from "@astrojs/sitemap";
 
-import { remarkReadingTime } from './src/lib/remark-reading-time.mjs';
-import { remarkModifiedTime } from './src/lib/remark-modified-time.mjs';
+import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
+import { remarkModifiedTime } from "./src/lib/remark-modified-time.mjs";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com', // TODO: replace with your actual domain
-  // adapter: cloudflare(),
+  adapter: cloudflare(),
   integrations: [mdx(), react(), sitemap()],
   markdown: {
     remarkPlugins: [remarkReadingTime, remarkModifiedTime],
