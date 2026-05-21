@@ -1,0 +1,44 @@
+---
+import Layout from "./Layout.astro";
+import { formatDate } from "../lib/helpers";
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  minutesRead?: string;
+}
+
+const { title, description, pubDate, minutesRead } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <main class="mx-auto w-full max-w-3xl min-h-screen p-8">
+    <a
+      href="/blog"
+      class="mb-8 inline-flex items-center gap-1 rounded-lg border border-border bg-card px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+    >
+      ← Back to blog
+    </a>
+
+    <div class="my-8">
+      <h1 class="text-4xl font-bold leading-tight">{title}</h1>
+      <div class="mt-3 flex items-center gap-4 text-sm text-muted-foreground">
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        {minutesRead && <span>·</span>}
+        {minutesRead && <span>{minutesRead}</span>}
+      </div>
+    </div>
+
+    <article
+      class="prose prose-neutral dark:prose-invert max-w-none
+             prose-headings:font-bold prose-headings:text-foreground
+             prose-p:text-muted-foreground prose-li:text-muted-foreground
+             prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+             prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5
+             prose-pre:bg-muted prose-pre:border prose-pre:border-border"
+    >
+      <slot />
+    </article>
+  </main>
+</Layout>
