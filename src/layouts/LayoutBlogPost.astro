@@ -1,10 +1,19 @@
 ---
 import Layout from "./Layout.astro";
-import { formatDate } from "../lib/helpers";
+import { formatDate } from "@/lib/helpers";
+import TableOfContents from "@/components/blog/TableOfContents.astro";
+import Prose from "@/components/Prose.astro";
+import { ArrowArcLeftIcon, ArrowLeftIcon } from "@phosphor-icons/react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
 
 interface Props {
   title: string;
@@ -12,9 +21,10 @@ interface Props {
   pubDate: Date;
   minutesRead?: string;
   lastModified?: string;
+  headings?: Heading[];
 }
 
-const { title, description, pubDate, minutesRead, lastModified } = Astro.props;
+const { title, description, pubDate, minutesRead, lastModified, headings = [] } = Astro.props;
 
 const lastModifiedFormatted = lastModified
   ? dayjs(lastModified).utc().format("MMM D, YYYY")
@@ -22,34 +32,71 @@ const lastModifiedFormatted = lastModified
 ---
 
 <Layout title={title} description={description}>
-  <main class="mx-auto w-full max-w-3xl min-h-screen p-8">
+  <main class="mx-auto w-full max-w-5xl min-h-screen p-8">
     <a
       href="/blog"
-      class="mb-8 inline-flex items-center gap-1 rounded-lg border border-border bg-card px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+      class="mb-10 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
     >
-      ← Back to blog
+      <ArrowLeftIcon size={16} aria-hidden="true" />
+      Back to blog
     </a>
 
-    <div class="my-8">
-      <h1 class="text-4xl font-bold leading-tight">{title}</h1>
-      <div class="mt-3 flex items-center gap-4 text-sm text-muted-foreground">
-        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-        {minutesRead && <span>·</span>}
-        {minutesRead && <span>{minutesRead}</span>}
-        {lastModifiedFormatted && <span>·</span>}
-        {lastModifiedFormatted && <span>Updated {lastModifiedFormatted}</span>}
-      </div>
-    </div>
+    <div class="blog-post-grid">
+      <div>
+        <div class="my-10">
+          <h1 class="text-4xl font-bold leading-tight tracking-tight">{title}</h1>
+          <div class="mt-4 flex items-center gap-3 text-sm text-muted-foreground">
+            <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+            {minutesRead ? <><span aria-hidden="true">·</span><span>{minutesRead}</span></> : null}
+            {lastModifiedFormatted ? <><span aria-hidden="true">·</span><span>Updated {lastModifiedFormatted}</span></> : null}
+          </div>
+        </div>
 
-    <article
-      class="prose prose-neutral dark:prose-invert max-w-none
-             prose-headings:font-bold prose-headings:text-foreground
-             prose-p:text-muted-foreground prose-li:text-muted-foreground
-             prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-             prose-code:rounded prose-code:bg-muted prose-code:px-1 prose-code:py-0.5
-             prose-pre:bg-muted prose-pre:border prose-pre:border-border"
-    >
-      <slot />
-    </article>
+        <Prose class="dark:prose-invert">
+          <slot />
+        </Prose>
+      </div>
+
+      {
+        headings.filter((h) => h.depth === 2 || h.depth === 3).length > 0 ? (
+          <aside class="toc-aside">
+            <div class="toc-scroll-wrap">
+              <TableOfContents headings={headings} />
+            </div>
+          </aside>
+        ) : null
+      }
+    </div>
   </main>
 </Layout>
+
+<style>
+  .toc-aside {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .blog-post-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .toc-aside {
+      display: block;
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+    }
+
+    .toc-scroll-wrap {
+      max-height: calc(100vh - 3rem);
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+  }
+
+</style>
+
+

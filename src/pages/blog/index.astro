@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import PostRow from "@/components/blog/PostRow.astro";
 import { SITE } from "@/site-config";
+import { ArrowLeftIcon } from "@phosphor-icons/react";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -13,18 +14,21 @@ const posts = (await getCollection("blog")).sort(
   title={`Blog · ${SITE.author.fullName}`}
   description="Articles, tutorials, and thoughts on software development."
 >
-  <main class="mx-auto w-full max-w-3xl min-h-screen p-8">
+  <main class="mx-auto w-full max-w-3xl min-h-screen px-6 py-12">
     <a
       href="/"
-      class="mb-8 inline-flex items-center gap-1 rounded-lg border border-border bg-card px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+      class="mb-10 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
     >
-      ← Back
+      <ArrowLeftIcon size={16} aria-hidden="true" />
+       Back
     </a>
 
-    <h1 class="mb-2 text-4xl font-bold">Blog</h1>
-    <p class="mb-8 text-muted-foreground">
-      {posts.length} post{posts.length !== 1 ? "s" : ""} — thoughts, tutorials, and notes.
-    </p>
+    <header class="mb-10">
+      <h1 class="text-5xl font-bold tracking-tight">Blog</h1>
+      <p class="mt-3 text-muted-foreground">
+        {posts.length} {posts.length !== 1 ? "posts" : "post"} — thoughts, tutorials, and notes.
+      </p>
+    </header>
 
     <ul class="flex flex-col gap-2">
       {
@@ -40,3 +44,4 @@ const posts = (await getCollection("blog")).sort(
     </ul>
   </main>
 </Layout>
+

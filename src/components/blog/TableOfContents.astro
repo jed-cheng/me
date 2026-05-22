@@ -1,0 +1,155 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+const toc = headings.filter((h) => h.depth >= 2);
+
+type TocItem = {
+  heading: Heading;
+  children: Heading[];
+};
+
+const nestedToc = toc.reduce<TocItem[]>((acc, heading) => {
+  if (heading.depth === 2) {
+    acc.push({ heading, children: [] });
+    return acc;
+  }
+
+  const lastParent = acc[acc.length - 1];
+  if (lastParent) {
+    lastParent.children.push(heading);
+  } else {
+    acc.push({ heading, children: [] });
+  }
+
+  return acc;
+}, []);
+
+---
+
+{
+  nestedToc.length > 0 && (
+    <nav aria-label="Table of contents">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        On this page
+      </p>
+      <ul class="space-y-1">
+        {nestedToc.map(({ heading, children }) => (
+          <li>
+            <a
+              href={`#${heading.slug}`}
+              class="toc-link block py-1 text-sm leading-snug text-muted-foreground transition-colors hover:text-foreground"
+              data-heading-id={heading.slug}
+            >
+              {heading.text}
+            </a>
+
+            {children.length > 0 && (
+              <ul class="mt-1 ml-3 space-y-1 border-l border-border pl-3">
+                {children.map((child) => (
+                  <li>
+                    <a
+                      href={`#${child.slug}`}
+                      class="toc-link block py-1 pl-1 text-sm leading-snug text-muted-foreground transition-colors hover:text-foreground"
+                      data-heading-id={child.slug}
+                    >
+                      {child.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  function initTableOfContents() {
+    const links = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+    if (links.length === 0) return;
+
+    const headingEls = Array.from(links)
+      .map((link) => document.getElementById(link.dataset.headingId || ""))
+      .filter(Boolean) as HTMLElement[];
+
+    if (headingEls.length === 0) return;
+
+    let activeId = "";
+
+    function setActive(id: string) {
+      if (!id || id === activeId) return;
+      activeId = id;
+
+      links.forEach((link) => {
+        const isActive = link.dataset.headingId === id;
+        link.classList.toggle("text-primary", isActive);
+        link.classList.toggle("font-medium", isActive);
+        link.classList.toggle("text-muted-foreground", !isActive);
+      });
+    }
+
+    function setActiveFromScrollPosition() {
+      const threshold = 120;
+      let current = headingEls[0];
+
+      for (const el of headingEls) {
+        if (el.getBoundingClientRect().top <= threshold) {
+          current = el;
+        }
+      }
+
+      if (current) setActive(current.id);
+    }
+
+    function setActiveFromHash() {
+      const hash = decodeURIComponent(window.location.hash.replace("#", ""));
+      if (!hash) return;
+      const target = headingEls.find((el) => el.id === hash);
+      if (target) setActive(target.id);
+    }
+
+    const observer = new IntersectionObserver(
+      () => {
+        setActiveFromScrollPosition();
+      },
+      {
+        root: null,
+        rootMargin: "-120px 0px -60% 0px",
+        threshold: [0, 1],
+      },
+    );
+
+    headingEls.forEach((el) => observer.observe(el));
+
+    const onScroll = () => setActiveFromScrollPosition();
+    const onHashChange = () => setActiveFromHash();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("hashchange", onHashChange);
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        const id = link.dataset.headingId;
+        if (id) setActive(id);
+      });
+    });
+
+    setActiveFromHash();
+    setActiveFromScrollPosition();
+  }
+
+  initTableOfContents();
+  document.addEventListener("astro:page-load", initTableOfContents);
+</script>
