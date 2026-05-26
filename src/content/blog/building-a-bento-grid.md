@@ -18,7 +18,7 @@ Bento-style UIs — grids of rounded cards with varying sizes — are trendy for
 
 By setting a fixed `max-h` you get the classic "everything fits the viewport" bento look on desktop while gracefully stacking on mobile.
 
-## Card sizing
+### Card sizing
 
 Each card gets `col-span-*` and `row-span-*` utilities:
 
@@ -35,9 +35,7 @@ Each card gets `col-span-*` and `row-span-*` utilities:
 On small screens the multi-column layout doesn't make sense. Use responsive prefixes to fall back to a single column:
 
 ```html
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-  ...
-</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">...</div>
 ```
 
 ## Tips
@@ -47,3 +45,31 @@ On small screens the multi-column layout doesn't make sense. Use responsive pref
 3. Keep card content simple — the grid structure does the visual heavy lifting.
 
 Happy building!
+
+## Why I Chose Astro for My Portfolio
+
+When rebuilding my personal site I evaluated several frameworks. Here's why **Astro** won out.
+
+## Zero JS by default
+
+Astro ships zero JavaScript to the browser unless you explicitly opt in with `client:load` or `client:idle`. For a portfolio where most content is static, that means blazing-fast page loads.
+
+## Islands architecture
+
+You get the best of both worlds: static HTML for most of the page and interactive React/Vue/Svelte components only where needed. The bento cards on my homepage are React components hydrated on the client while the rest of the HTML is plain, fast markup.
+
+## Content collections
+
+Astro's built-in content layer gives you:
+
+- Type-safe frontmatter
+- Automatic routing from markdown files
+- A clean `getCollection` / `getEntry` API
+
+Writing blog posts is as simple as dropping a `.md` (or `.mdx`) file into `src/content/blog/`.
+
+## Great DX
+
+Hot-module reloading, TypeScript everywhere, and a thriving ecosystem of integrations (React, Tailwind, MDX, sitemaps) made the setup feel effortless.
+
+If you're building a portfolio, blog, or marketing site, give Astro a try!

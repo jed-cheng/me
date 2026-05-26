@@ -26,3 +26,5 @@ pnpm-debug.log*
 
 # wragnler cache
 .wrangler/
+
+.agents/

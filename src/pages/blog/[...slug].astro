@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
 ---
 
 <LayoutBlogPost
@@ -24,6 +24,7 @@ const { Content, remarkPluginFrontmatter } = await render(post);
   pubDate={post.data.pubDate}
   minutesRead={remarkPluginFrontmatter?.minutesRead}
   lastModified={remarkPluginFrontmatter?.lastModified}
+  headings={headings}
 >
   <Content />
 </LayoutBlogPost>
